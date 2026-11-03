@@ -18,10 +18,15 @@
 | --- | --- |
 | `sa-demo.mp4`, `sa-poster.jpg` | `sosninaalbums/docs/media/demo.webp` (141 кадр, 13,1 с) перекодировано в H.264 |
 | `sa-screenshot.webp` | `sosninaalbums/docs/media/screenshot.jpg` |
-| `diplodok.webp` | снимок экрана живой игры на Pages |
-| `vasulyatr-icon.png` | `vasulyatr/design/icon-512.png` |
 | `hero.webp`, `cover-*.webp`, `mark-512.png`, `og.jpg` | сгенерированы (Google Nano Banana 2.1, 2K) |
+| `diplodok.webp` | снимок экрана живой игры на Pages — запасной вариант обложки |
+| `vasulyatr-icon.png` | `vasulyatr/design/icon-512.png` — запасной вариант обложки |
 | `favicon.svg` | нарисован по сгенерированному знаку, чтобы был чётким на 16 px |
+
+На карточках Диплодока и Васюлятра стоят сгенерированные обложки. Чтобы вернуть
+настоящий игровой кадр и иконку приложения, достаточно поменять `src` у картинки
+на `assets/diplodok.webp` или `assets/vasulyatr-icon.png` (иконке нужен ещё класс
+`contain` у обёртки `.card-cover`).
 
 Рецепт генерации и журнал опытов — `CommonKnowledge/wails-desktop/graphics-packs.md`
 и `diplodok-kladoiskatel/docs/art-pipeline.md`. Коротко: чистый белый фон,
