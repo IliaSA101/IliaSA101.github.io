@@ -4,11 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Илья Соснин — приложения и инструменты</title>
-<meta name="description" content="Настольные и браузерные приложения: вёрстка фотоальбомов, обезличивание Excel, детские игры и калькулятор. Go, Rust, Kotlin, TypeScript. Исходники открыты.">
+<meta name="description" content="Вёрстка свадебных фотоальбомов, обезличивание Excel-дашбордов, упаковщик исходников для языковой модели, детские игра и калькулятор. Go, Rust, Kotlin, TypeScript. Исходники открыты.">
 <meta property="og:title" content="Илья Соснин — приложения и инструменты">
 <meta property="og:description" content="Настольные и браузерные приложения с открытыми исходниками: Go, Rust, Kotlin, TypeScript.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2032%2032%22%3E%3Crect%20width=%2232%22%20height=%2232%22%20rx=%227%22%20fill=%22%232f6f4e%22/%3E%3Ctext%20x=%2216%22%20y=%2222%22%20font-family=%22Georgia,serif%22%20font-size=%2217%22%20fill=%22%23fff%22%20text-anchor=%22middle%22%3E%D0%98%3C/text%3E%3C/svg%3E">
+<meta property="og:url" content="https://iliasa101.github.io/">
+<meta property="og:image" content="https://iliasa101.github.io/assets/og.jpg">
+<meta name="theme-color" content="#14171a">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/mark-512.png">
+<script>document.documentElement.className += ' js';</script>
 <style>
   :root {
     --bg: #fbfaf8;
@@ -21,8 +26,10 @@
     --accent: #2f6f4e;
     --accent-fg: #ffffff;
     --tag-bg: #eef1ed;
-    --shadow: 0 1px 2px rgba(27, 29, 28, .05), 0 8px 24px rgba(27, 29, 28, .04);
+    --media-bg: #eceae4;
+    --shadow: 0 1px 2px rgba(27, 29, 28, .05), 0 8px 24px rgba(27, 29, 28, .05);
     --radius: 14px;
+    --cover-filter: none;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -36,7 +43,9 @@
       --accent: #6fc295;
       --accent-fg: #0f1312;
       --tag-bg: #242a28;
+      --media-bg: #111416;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .25);
+      --cover-filter: brightness(.9) saturate(.95);
     }
   }
   :root[data-theme="dark"] {
@@ -50,77 +59,117 @@
     --accent: #6fc295;
     --accent-fg: #0f1312;
     --tag-bg: #242a28;
+    --media-bg: #111416;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .25);
+    --cover-filter: brightness(.9) saturate(.95);
   }
 
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--fg);
     font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 16px; }
+  img, video { display: block; max-width: 100%; }
 
-  header { padding: 72px 0 40px; }
+  /* ---------- шапка на тёмном фоне ---------- */
+  .hero {
+    position: relative;
+    background: #1b211d url("assets/hero.webp") center / cover no-repeat;
+    color: #f1f3ef;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(14, 19, 16, .35) 0%, rgba(14, 19, 16, .72) 100%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; padding-top: 68px; padding-bottom: 60px; }
+  .mark {
+    width: 54px;
+    height: 54px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  }
   h1 {
-    margin: 0 0 14px;
-    font-size: clamp(30px, 6vw, 44px);
-    line-height: 1.12;
-    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    font-size: clamp(32px, 6.4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
     font-weight: 650;
   }
   .lede {
-    margin: 0 0 8px;
-    max-width: 62ch;
+    margin: 0 0 10px;
+    max-width: 60ch;
     font-size: clamp(16px, 2.4vw, 18px);
-    color: var(--fg-muted);
+    color: #cdd5ce;
   }
-  .contacts {
-    margin-top: 22px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  .contacts { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
   .contacts a {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 7px 13px;
-    border: 1px solid var(--line-strong);
+    padding: 8px 14px;
+    border: 1px solid rgba(241, 243, 239, .3);
     border-radius: 999px;
-    color: var(--fg);
+    color: #f1f3ef;
     text-decoration: none;
     font-size: 14px;
-    background: var(--bg-card);
-    transition: border-color .15s, color .15s;
+    backdrop-filter: blur(2px);
+    transition: border-color .15s, background-color .15s;
   }
-  .contacts a:hover { border-color: var(--accent); color: var(--accent); }
+  .contacts a:hover { border-color: #f1f3ef; background: rgba(241, 243, 239, .1); }
   .contacts svg { width: 16px; height: 16px; flex: none; }
 
-  section { padding-bottom: 56px; }
+  /* ---------- секции ---------- */
+  section { padding-bottom: 60px; }
   .sec-head {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 6px 14px;
-    padding: 26px 0 20px;
-    border-top: 1px solid var(--line);
+    padding: 44px 0 22px;
   }
-  h2 {
-    margin: 0;
-    font-size: 20px;
-    letter-spacing: -0.01em;
-    font-weight: 620;
-  }
+  section + section .sec-head { border-top: 1px solid var(--line); padding-top: 34px; }
+  h2 { margin: 0; font-size: 21px; letter-spacing: -0.015em; font-weight: 620; }
   .sec-note { margin: 0; font-size: 14px; color: var(--fg-faint); }
 
-  .grid {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  /* ---------- главный проект ---------- */
+  .feature {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
   }
+  .feature-media { background: var(--media-bg); border-bottom: 1px solid var(--line); }
+  .feature-media video, .feature-media img { width: 100%; }
+  .feature-body { padding: 24px 24px 22px; }
+  .feature-body h3 {
+    margin: 0 0 12px;
+    font-size: clamp(22px, 3.4vw, 27px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 640;
+  }
+  .feature-body p { margin: 0 0 14px; max-width: 70ch; color: var(--fg-muted); }
+  .feature-body p.aside { font-size: 14.5px; color: var(--fg-faint); }
+  .shots { border-top: 1px solid var(--line); background: var(--media-bg); }
+  figure { margin: 0; }
+  figcaption {
+    padding: 9px 14px;
+    font-size: 12.5px;
+    color: var(--fg-faint);
+    background: var(--bg-card);
+  }
+
+  /* ---------- карточки ---------- */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   .card {
     display: flex;
     flex-direction: column;
@@ -128,37 +177,51 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 20px 20px 18px;
+    overflow: hidden;
+    transition: transform .18s ease, box-shadow .18s ease;
   }
+  .card-cover {
+    aspect-ratio: 16 / 9;
+    background: var(--media-bg);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .card-cover img { width: 100%; height: 100%; object-fit: cover; filter: var(--cover-filter); }
+  .card-cover.contain {
+    display: grid;
+    place-items: center;
+    background: var(--tag-bg);
+  }
+  .card-cover.contain img {
+    width: 30%;
+    max-width: 132px;
+    height: auto;
+    object-fit: contain;
+    filter: none;
+    border-radius: 22%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+  }
+  .card-body { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 18px; }
   .tag {
-    margin: 0 0 10px;
+    margin: 0 0 9px;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: .09em;
     text-transform: uppercase;
     color: var(--fg-faint);
   }
-  .card h3 {
-    margin: 0 0 10px;
-    font-size: 19px;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    font-weight: 620;
+  .tag .soon {
+    margin-left: 7px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: var(--accent);
+    color: var(--accent-fg);
+    letter-spacing: .06em;
   }
-  .card p {
-    margin: 0 0 12px;
-    font-size: 15px;
-    color: var(--fg-muted);
-  }
+  .card h3 { margin: 0 0 10px; font-size: 19px; line-height: 1.25; letter-spacing: -0.012em; font-weight: 620; }
+  .card p { margin: 0 0 12px; font-size: 15px; color: var(--fg-muted); }
   .card p.aside { font-size: 14px; color: var(--fg-faint); }
-  .stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 0 0 16px;
-    padding: 0;
-    list-style: none;
-  }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
   .stack li {
     padding: 3px 9px;
     border-radius: 6px;
@@ -166,13 +229,7 @@
     color: var(--fg-muted);
     font-size: 12.5px;
   }
-  .actions {
-    margin-top: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px 16px;
-  }
+  .actions { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -205,75 +262,79 @@
   footer a { color: var(--fg-muted); }
   footer a:hover { color: var(--accent); }
 
-  @media (max-width: 560px) {
-    header { padding-top: 48px; }
-    .card { padding: 18px 16px 16px; }
+  /* ---------- движение ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(27, 29, 28, .06), 0 14px 32px rgba(27, 29, 28, .08); }
+    .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .js .reveal.shown { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 680px) {
+    .hero > .wrap { padding-top: 48px; padding-bottom: 44px; }
+    .shots { grid-template-columns: 1fr; }
+    .feature-body { padding: 20px 16px 18px; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
-  <h1>Илья Соснин</h1>
-  <p class="lede">Делаю настольные и браузерные приложения — от вёрстки фотоальбомов для фотографа до детской игры про диплодока. Go, Rust, Kotlin, TypeScript.</p>
-  <p class="lede">Здесь только то, что доведено до работающего состояния: можно скачать, открыть и пользоваться. Исходники всех проектов открыты.</p>
-  <nav class="contacts">
-    <a href="https://github.com/IliaSA101">
-      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.88.51-1.08-1.78-.2-2.91-.88-2.91-3.04 0-.62.22-1.13.58-1.53-.05-.14-.25-.73.05-1.52 0 0 .6-.19 1.97.73a5.6 5.6 0 0 1 1.5-.2c.51 0 1.02.07 1.5.2 1.37-.93 1.97-.73 1.97-.73.3.79.11 1.38.06 1.52.36.4.58.91.58 1.53 0 2.17-1.14 2.84-2.92 3.04.3.26.56.76.56 1.54 0 1.11-.01 2-.01 2.27 0 .21.15.46.55.38A7.99 7.99 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-      github.com/IliaSA101
-    </a>
-    <a href="mailto:iliasa10101@gmail.com">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.2" y="3" width="13.6" height="10" rx="1.6"/><path d="M1.6 4.2 8 8.8l6.4-4.6"/></svg>
-      iliasa10101@gmail.com
-    </a>
-  </nav>
+<header class="hero">
+  <div class="wrap">
+    <img class="mark" src="assets/favicon.svg" width="54" height="54" alt="">
+    <h1>Илья Соснин</h1>
+    <p class="lede">Делаю настольные и браузерные приложения — от вёрстки свадебных фотоальбомов для работающего фотографа до детской игры про диплодока. Go, Rust, Kotlin, TypeScript.</p>
+    <p class="lede">Здесь только то, что доведено до работающего состояния: можно скачать, открыть и пользоваться. Исходники всех проектов открыты.</p>
+    <nav class="contacts">
+      <a href="https://github.com/IliaSA101">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.88.51-1.08-1.78-.2-2.91-.88-2.91-3.04 0-.62.22-1.13.58-1.53-.05-.14-.25-.73.05-1.52 0 0 .6-.19 1.97.73a5.6 5.6 0 0 1 1.5-.2c.51 0 1.02.07 1.5.2 1.37-.93 1.97-.73 1.97-.73.3.79.11 1.38.06 1.52.36.4.58.91.58 1.53 0 2.17-1.14 2.84-2.92 3.04.3.26.56.76.56 1.54 0 1.11-.01 2-.01 2.27 0 .21.15.46.55.38A7.99 7.99 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        github.com/IliaSA101
+      </a>
+      <a href="https://t.me/Ilya_Sosnin">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M14.8 2.2 1.5 7.3c-.7.3-.7.8-.1 1l3.4 1 1.3 4c.2.4.3.6.7.6.3 0 .4-.1.6-.3l1.6-1.6 3.4 2.5c.6.3 1 .2 1.2-.6l2.2-10.2c.2-.9-.3-1.3-1-1Zm-2.3 2.5-5.6 5.1-.2 2.3-1.1-3.4 6.5-4.4c.3-.2.6-.1.4.4Z"/></svg>
+        @Ilya_Sosnin
+      </a>
+      <a href="mailto:iliasa10101@gmail.com">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.2" y="3" width="13.6" height="10" rx="1.6"/><path d="M1.6 4.2 8 8.8l6.4-4.6"/></svg>
+        iliasa10101@gmail.com
+      </a>
+    </nav>
+  </div>
 </header>
+
+<div class="wrap">
 
 <section>
   <div class="sec-head">
-    <h2>Приложения и игры</h2>
-    <p class="sec-note">для людей, а не для разработчиков</p>
+    <h2>Главный проект</h2>
+    <p class="sec-note">настольное приложение, которым каждый день работают</p>
   </div>
-  <div class="grid">
 
-    <article class="card">
-      <p class="tag">Браузерная игра · 7+</p>
-      <h3>Диплодок Кладоискатель</h3>
-      <p>Добрый диплодок ходит по лесу и ищет клады: копает из земли, тянется длинной шеей к кронам, толкает камни и вылавливает из ручья. Восемь лесов, секретный сундук с короной, белка показывает лапкой направление.</p>
-      <p class="aside">Проиграть нельзя и читать не нужно: ни таймеров, ни жизней, ни врагов. Автор идеи и названия — семилетний мальчик, для которого игра и сделана.</p>
-      <ul class="stack"><li>TypeScript</li><li>Phaser</li><li>вся графика и звук — кодом</li></ul>
-      <div class="actions">
-        <a class="btn" href="https://iliasa101.github.io/diplodok-kladoiskatel/">Играть →</a>
-        <a class="btn-ghost" href="https://github.com/IliaSA101/diplodok-kladoiskatel">Исходники</a>
-      </div>
-    </article>
-
-    <article class="card">
-      <p class="tag">Приложение · Android</p>
-      <h3>Васюлятр</h3>
-      <p>Детский калькулятор, который делит <strong>с остатком</strong>, как учат в школе: 10 : 3 = 3, остаток 1 — и строка-проверка 3 × 3 + 1 = 10, по которой ребёнок сам убедится, что ответ верный.</p>
-      <p class="aside">Крупные кнопки, светлая и тёмная тема, подписи для TalkBack. Ни сети, ни рекламы, ни разрешений, ни сбора данных.</p>
-      <ul class="stack"><li>Kotlin</li><li>Jetpack Compose</li><li>Android 8+</li></ul>
-      <div class="actions">
-        <a class="btn" href="https://github.com/IliaSA101/vasulyatr/releases/latest">Скачать APK →</a>
-        <a class="btn-ghost" href="https://github.com/IliaSA101/vasulyatr">Исходники</a>
-      </div>
-    </article>
-
-    <article class="card">
+  <article class="feature reveal">
+    <div class="feature-media">
+      <video id="sa-demo" src="assets/sa-demo.mp4" poster="assets/sa-poster.jpg"
+             width="960" height="600" autoplay muted loop playsinline preload="metadata"
+             aria-label="Автосборка альбома и перелистывание разворотов в Sosnina Albums"></video>
+    </div>
+    <div class="feature-body">
       <p class="tag">Приложение · Windows, macOS, Linux</p>
       <h3>Sosnina Albums</h3>
-      <p>Вёрстка свадебных фотоальбомов: выбрать папки с фото, собрать развороты автоматически или перетащить кадры руками, перебрать варианты раскладки и выгрузить развороты в JPEG 300 dpi для типографии. Поля и зазоры — в миллиметрах, фото не обрезаются без вашего согласия.</p>
-      <p class="aside">Сделано вместе с фотографом Мариной Сосниной и используется в её работе.</p>
-      <ul class="stack"><li>Go</li><li>Wails</li><li>Svelte</li><li>GPL-3.0</li></ul>
+      <p>Вёрстка свадебных фотоальбомов. Выбрать папки с фото, собрать развороты автоматически или перетащить кадры руками, перебрать варианты раскладки и выгрузить развороты в JPEG 300 dpi для типографии.</p>
+      <p>Раскладки считаются точно, а <strong>фото не обрезаются без вашего согласия</strong>: рамка держит пропорции кадра, пока вы сами не выберете навылет (обрезает до 30 %), подгонку под лист (до 15 %) или свой кроп. Поля и зазоры задаются в миллиметрах.</p>
+      <p class="aside">Сделано вместе с фотографом Мариной Сосниной и используется в её работе. Версия 0.35.0, разработка идёт.</p>
+      <ul class="stack"><li>Go 1.26</li><li>Wails v2</li><li>Svelte 5</li><li>TypeScript</li><li>GPL-3.0</li></ul>
       <div class="actions">
         <a class="btn" href="https://github.com/IliaSA101/sosninaalbums/releases/latest">Скачать →</a>
         <a class="btn-ghost" href="https://github.com/IliaSA101/sosninaalbums">Исходники</a>
       </div>
-    </article>
-
-  </div>
+    </div>
+    <div class="shots">
+      <figure>
+        <img src="assets/sa-screenshot.webp" width="1600" height="1000" loading="lazy"
+             alt="Окно Sosnina Albums: разворот в работе, под ним лента разворотов, внизу отобранные кадры">
+        <figcaption>Разворот в работе, под ним лента разворотов, внизу — отобранные кадры. Формат и уровень качества выбираются сверху, рядом кнопка экспорта</figcaption>
+      </figure>
+    </div>
+  </article>
 </section>
 
 <section>
@@ -283,27 +344,99 @@
   </div>
   <div class="grid">
 
-    <article class="card">
-      <p class="tag">Инструмент · Windows</p>
-      <h3>finboard-anon</h3>
-      <p>Обезличивает Excel-дашборды: ФИО, телефоны, email, ИНН и названия организаций заменяются на правдоподобные фейки, а формулы, сводные таблицы, диаграммы и оформление остаются рабочими.</p>
-      <p class="aside">Один человек — один фейк во всех файлах заказчика, в любом написании, поэтому связки «организация ↔ ИНН» и «ФИО ↔ телефон ↔ email» сохраняются. Работает на компьютере, без интернета.</p>
-      <ul class="stack"><li>Rust</li><li>офлайн</li><li>отчёт проверки</li></ul>
-      <div class="actions">
-        <a class="btn" href="https://github.com/IliaSA101/finboard-anon/releases/latest">Скачать →</a>
-        <a class="btn-ghost" href="https://github.com/IliaSA101/finboard-anon">Исходники</a>
+    <article class="card reveal">
+      <div class="card-cover">
+        <img src="assets/cover-finboard.webp" width="960" height="536" loading="lazy"
+             alt="Таблица, где один столбец заменён закрашенными ячейками, а диаграммы остались на месте">
+      </div>
+      <div class="card-body">
+        <p class="tag">Инструмент · Windows</p>
+        <h3>finboard-anon</h3>
+        <p>Обезличивает Excel-дашборды: ФИО, телефоны, email, ИНН и названия организаций заменяются на правдоподобные фейки, а формулы, сводные таблицы, диаграммы и оформление остаются рабочими.</p>
+        <p class="aside">Один человек — один фейк во всех файлах заказчика, в любом написании, поэтому связки «организация ↔ ИНН» и «ФИО ↔ телефон ↔ email» сохраняются. Работает на компьютере, без интернета.</p>
+        <ul class="stack"><li>Rust</li><li>офлайн</li><li>отчёт проверки</li></ul>
+        <div class="actions">
+          <a class="btn" href="https://github.com/IliaSA101/finboard-anon/releases/latest">Скачать →</a>
+          <a class="btn-ghost" href="https://github.com/IliaSA101/finboard-anon">Исходники</a>
+        </div>
       </div>
     </article>
 
-    <article class="card">
-      <p class="tag">Инструмент · CLI и веб-форма</p>
-      <h3>aiexport</h3>
-      <p>Собирает исходники из нескольких папок в один файл для языковой модели: запустил бинарник — открылась форма в браузере, выбрал пути, получил файл. Мультикорневые бандлы с человеческими подписями, режим «только дерево» для отдельных путей.</p>
-      <p class="aside">Считает токены (o200k_base) и честно отчитывается о пропущенном: молчаливая потеря содержимого — главный способ, которым такие инструменты вредят.</p>
-      <ul class="stack"><li>Go</li><li>один статический бинарник</li><li>Windows, macOS, Linux</li></ul>
-      <div class="actions">
-        <a class="btn" href="https://github.com/IliaSA101/aiexport/releases/latest">Скачать →</a>
-        <a class="btn-ghost" href="https://github.com/IliaSA101/aiexport">Исходники</a>
+    <article class="card reveal">
+      <div class="card-cover">
+        <img src="assets/cover-aiexport.webp" width="960" height="536" loading="lazy"
+             alt="Три папки, из которых линии сходятся в один файл">
+      </div>
+      <div class="card-body">
+        <p class="tag">Инструмент · CLI и веб-форма</p>
+        <h3>aiexport</h3>
+        <p>Собирает исходники из нескольких папок в один файл для языковой модели: запустил бинарник — открылась форма в браузере, выбрал пути, получил файл. Мультикорневые бандлы с человеческими подписями, режим «только дерево» для отдельных путей.</p>
+        <p class="aside">Считает токены (o200k_base) и честно отчитывается о пропущенном: молчаливая потеря содержимого — главный способ, которым такие инструменты вредят.</p>
+        <ul class="stack"><li>Go</li><li>один статический бинарник</li><li>Windows, macOS, Linux</li></ul>
+        <div class="actions">
+          <a class="btn" href="https://github.com/IliaSA101/aiexport/releases/latest">Скачать →</a>
+          <a class="btn-ghost" href="https://github.com/IliaSA101/aiexport">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Игры и развлечения</h2>
+    <p class="sec-note">сделано для своих детей</p>
+  </div>
+  <div class="grid">
+
+    <article class="card reveal">
+      <div class="card-cover">
+        <img src="assets/diplodok.webp" width="800" height="500" loading="lazy"
+             alt="Игровой кадр: диплодок идёт по летнему лесу, вокруг бабочки и цветы, сверху счёт найденных кладов">
+      </div>
+      <div class="card-body">
+        <p class="tag">Браузерная игра · 7+</p>
+        <h3>Диплодок Кладоискатель</h3>
+        <p>Добрый диплодок ходит по лесу и ищет клады: копает из земли, тянется длинной шеей к кронам, толкает камни и вылавливает из ручья. Восемь лесов, секретный сундук с короной, белка показывает лапкой направление.</p>
+        <p class="aside">Проиграть нельзя и читать не нужно: ни таймеров, ни жизней, ни врагов. Автор идеи и названия — семилетний мальчик, для которого игра и сделана.</p>
+        <ul class="stack"><li>TypeScript</li><li>Phaser</li><li>графика и звук — кодом</li></ul>
+        <div class="actions">
+          <a class="btn" href="https://iliasa101.github.io/diplodok-kladoiskatel/">Играть →</a>
+          <a class="btn-ghost" href="https://github.com/IliaSA101/diplodok-kladoiskatel">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-cover contain">
+        <img src="assets/vasulyatr-icon.png" width="320" height="320" loading="lazy"
+             alt="Иконка Васюлятра">
+      </div>
+      <div class="card-body">
+        <p class="tag">Приложение · Android</p>
+        <h3>Васюлятр</h3>
+        <p>Детский калькулятор, который делит <strong>с остатком</strong>, как учат в школе: 10 : 3 = 3, остаток 1 — и строка-проверка 3 × 3 + 1 = 10, по которой ребёнок сам убедится, что ответ верный.</p>
+        <p class="aside">Крупные кнопки, светлая и тёмная тема, подписи для TalkBack. Ни сети, ни рекламы, ни разрешений, ни сбора данных.</p>
+        <ul class="stack"><li>Kotlin</li><li>Jetpack Compose</li><li>Android 8+</li></ul>
+        <div class="actions">
+          <a class="btn" href="https://github.com/IliaSA101/vasulyatr/releases/latest">Скачать APK →</a>
+          <a class="btn-ghost" href="https://github.com/IliaSA101/vasulyatr">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card reveal">
+      <div class="card-cover">
+        <img src="assets/cover-stickers.webp" width="960" height="536" loading="lazy"
+             alt="Две наклейки с белой рамкой и футбольный мяч рядом">
+      </div>
+      <div class="card-body">
+        <p class="tag">Приложение · Android <span class="soon">Скоро</span></p>
+        <h3>Обмен наклейками</h3>
+        <p>Вставляешь список наклеек собеседника — приложение показывает, какие можно у него взять и какие отдать взамен. Разбор сообщения в любом виде, без интернета.</p>
+        <p class="aside">Готово и работает на телефоне, выкладываю в ближайшее время — тогда здесь появится ссылка на APK и исходники.</p>
+        <ul class="stack"><li>Android</li><li>офлайн</li><li>22 КБ</li></ul>
       </div>
     </article>
 
@@ -312,8 +445,27 @@
 
 <footer>
   Исходники всех проектов — на <a href="https://github.com/IliaSA101">GitHub</a>.
+  Иллюстрации на обложках инструментов сгенерированы, снимки экрана и запись Sosnina Albums — настоящие.
 </footer>
 
 </div>
+
+<script>
+  // Движение — только для тех, кто его не отключил
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var demo = document.getElementById('sa-demo');
+  if (calm.matches) {
+    if (demo) { demo.removeAttribute('autoplay'); demo.removeAttribute('loop'); demo.controls = true; demo.pause(); }
+  } else if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('shown'); });
+  }
+</script>
 </body>
 </html>
