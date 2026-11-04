@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Илья Соснин — приложения и инструменты</title>
-<meta name="description" content="Вёрстка свадебных фотоальбомов, обезличивание Excel-дашбордов, упаковщик исходников для языковой модели, детские игра и калькулятор. Go, Rust, Kotlin, TypeScript. Исходники открыты.">
+<meta name="description" content="CTO, инженерный менеджер, владелец продукта. В IT больше 17 лет. Настольные и браузерные приложения с открытыми исходниками: вёрстка свадебных фотоальбомов, обезличивание Excel-дашбордов, упаковщик исходников для языковой модели, детские игра и калькулятор. Go, Rust, Kotlin, TypeScript.">
 <meta property="og:title" content="Илья Соснин — приложения и инструменты">
-<meta property="og:description" content="Настольные и браузерные приложения с открытыми исходниками: Go, Rust, Kotlin, TypeScript.">
+<meta property="og:description" content="CTO, инженерный менеджер, владелец продукта. В IT больше 17 лет. Настольные и браузерные приложения с открытыми исходниками: Go, Rust, Kotlin, TypeScript.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iliasa101.github.io/">
 <meta property="og:image" content="https://iliasa101.github.io/assets/og.jpg">
@@ -86,6 +86,14 @@
     border-bottom: 1px solid var(--line);
   }
   .hero > .wrap { padding-top: 76px; padding-bottom: 62px; }
+  .role {
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
   h1 {
     margin: 0 0 16px;
     font-size: clamp(32px, 6.4vw, 48px);
@@ -192,6 +200,29 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
   }
   .card-body { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 18px; }
+  .card.plain {
+    background: none;
+    box-shadow: none;
+    border-style: dashed;
+  }
+  .card.plain .card-body { padding-top: 20px; }
+  .status {
+    align-self: flex-start;
+    margin: 0 0 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--fg-faint);
+    font-size: 12px;
+  }
+  .more {
+    margin: 22px 0 0;
+    max-width: 34em;
+    font-size: 14px;
+    color: var(--fg-faint);
+  }
+  .more a { color: var(--fg-muted); }
+  .more a:hover { color: var(--accent); }
   .card-body .tag, .feature-body .tag {
     margin: 0 0 9px;
     font-size: 12px;
@@ -246,6 +277,7 @@
 
   /* ---------- движение ---------- */
   @media (prefers-reduced-motion: no-preference) {
+    .card.plain:hover { transform: none; box-shadow: none; border-color: var(--line-strong); }
     .card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(60, 48, 24, .07), 0 14px 32px rgba(60, 48, 24, .09); }
     .js .reveal { opacity: 0; transform: translateY(10px); transition: opacity .25s ease, transform .25s ease; }
     .js .reveal.shown { opacity: 1; transform: none; }
@@ -261,9 +293,10 @@
 
 <header class="hero">
   <div class="wrap">
+    <p class="role">CTO · инженерный менеджер · владелец продукта</p>
     <h1>Илья Соснин</h1>
-    <p class="lede">Делаю настольные и браузерные приложения — от вёрстки свадебных фотоальбомов для работающего фотографа до детской игры про диплодока. Go, Rust, Kotlin, TypeScript.</p>
-    <p class="lede">Здесь только то, что доведено до работающего состояния: можно скачать, открыть и пользоваться. Исходники всех проектов открыты.</p>
+    <p class="lede">В IT больше 17 лет: прошёл путь от инженера-программиста до руководителя бизнес-юнита с ответственностью за P&amp;L. Сложные веб-приложения, автоматизация бизнеса, прозрачные процессы разработки.</p>
+    <p class="lede">Ниже — то, что пишу сам и довёл до работающего состояния: от вёрстки свадебных фотоальбомов для работающего фотографа до детской игры про диплодока. Go, Rust, Kotlin, TypeScript, исходники открыты. Что ещё в работе — отдельным разделом в конце.</p>
     <nav class="contacts">
       <a href="https://github.com/IliaSA101">
         <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.88.51-1.08-1.78-.2-2.91-.88-2.91-3.04 0-.62.22-1.13.58-1.53-.05-.14-.25-.73.05-1.52 0 0 .6-.19 1.97.73a5.6 5.6 0 0 1 1.5-.2c.51 0 1.02.07 1.5.2 1.37-.93 1.97-.73 1.97-.73.3.79.11 1.38.06 1.52.36.4.58.91.58 1.53 0 2.17-1.14 2.84-2.92 3.04.3.26.56.76.56 1.54 0 1.11-.01 2-.01 2.27 0 .21.15.46.55.38A7.99 7.99 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
@@ -421,6 +454,56 @@
     </article>
 
   </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Серверное и архитектура</h2>
+    <p class="sec-note">ещё в работе — здесь интересно устройство, а не готовый продукт</p>
+  </div>
+  <div class="grid">
+
+    <article class="card plain reveal">
+      <div class="card-body">
+        <p class="status">В разработке</p>
+        <h3>sosninaalbums-cloud</h3>
+        <p>Сервис онлайн-листалок для Sosnina Albums: фотограф жмёт «Выгрузить» в настольной программе и получает ссылку для клиента — при желании с паролем и сроком.</p>
+        <p class="aside">Сервис на Go без базы данных, Caddy держит TLS, статику и проверку пароля. Podman rootless с Quadlet вместо демона, развёртывание OpenTofu → Ansible, резервные копии restic.</p>
+        <ul class="stack"><li>Go</li><li>Caddy</li><li>Podman</li><li>Ansible</li><li>Debian 13</li></ul>
+        <div class="actions">
+          <a class="btn-ghost" href="https://github.com/IliaSA101/sosninaalbums-cloud">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card plain reveal">
+      <div class="card-body">
+        <p class="status">Учебный, в работе</p>
+        <h3>URL Shortener</h3>
+        <p>Сокращатель ссылок с асинхронной аналитикой переходов на кластере K3s из трёх VDS: мастер с мониторингом и Traefik, воркеры с PostgreSQL, RabbitMQ, Redis и Metabase.</p>
+        <p class="aside">Пет-проект, чтобы вживую собрать Cloud Native: инфраструктура кодом, очереди, метрики в Prometheus и панели в Grafana — не по статьям, а руками на своих серверах.</p>
+        <ul class="stack"><li>K3s</li><li>Terraform</li><li>Ansible</li><li>RabbitMQ</li><li>Prometheus</li></ul>
+        <div class="actions">
+          <a class="btn-ghost" href="https://github.com/IliaSA101/url-shortener-cloud-native">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card plain reveal">
+      <div class="card-body">
+        <p class="status">Разбор архитектуры</p>
+        <h3>event-driven-bitrix</h3>
+        <p>«История заказов» для интернет-магазина, вынесенная из ядра CMS: Битрикс работает шлюзом и фронтом, тяжёлое читает и считает отдельный PHP-микросервис.</p>
+        <p class="aside">Микросервис подключён только к slave-базе и Redis, тяжёлые отчёты уходят воркеру через RabbitMQ. Внутренняя сеть Docker наружу не выставлена — так обходится «распределённый монолит».</p>
+        <ul class="stack"><li>PHP 8.2</li><li>RabbitMQ</li><li>Redis</li><li>MariaDB master–slave</li><li>Docker</li></ul>
+        <div class="actions">
+          <a class="btn-ghost" href="https://github.com/IliaSA101/event-driven-bitrix">Исходники</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+  <p class="more">Ещё из этой же области: <a href="https://github.com/IliaSA101/social_network_system_design">System Design социальной сети для путешественников</a> — расчёты нагрузки, схема хранения и шардирования; <a href="https://github.com/IliaSA101/b24-access-rights-v2-demo">BX.UI.AccessRights.V2</a> — рабочий пример внедрения недокументированного компонента прав доступа Битрикс24.</p>
 </section>
 
 <footer>
