@@ -10,58 +10,63 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iliasa101.github.io/">
 <meta property="og:image" content="https://iliasa101.github.io/assets/og.jpg">
-<meta name="theme-color" content="#14171a">
+<meta name="theme-color" content="#f1e9d7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#201e18" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/mark-512.png">
 <script>document.documentElement.className += ' js';</script>
 <style>
   :root {
-    --bg: #fbfaf8;
-    --bg-card: #ffffff;
-    --fg: #1b1d1c;
-    --fg-muted: #5e635f;
-    --fg-faint: #6f7571;
-    --line: #e3e1dc;
-    --line-strong: #d2cfc8;
-    --accent: #2f6f4e;
-    --accent-fg: #ffffff;
-    --tag-bg: #eef1ed;
-    --media-bg: #eceae4;
-    --shadow: 0 1px 2px rgba(27, 29, 28, .05), 0 8px 24px rgba(27, 29, 28, .05);
+    color-scheme: light dark;
+    --bg: #f6f2ea;
+    --bg-head: #f1e9d7;
+    --bg-card: #fffdf8;
+    --fg: #1a1814;
+    --fg-muted: #5c5547;
+    --fg-faint: #6b6354;
+    --line: #e2d9c6;
+    --line-strong: #cdc2a9;
+    --accent: #1f5134;
+    --accent-fg: #fffdf8;
+    --tag-bg: #ece4d2;
+    --media-bg: #f3ecdd;
+    --shadow: 0 1px 2px rgba(60, 48, 24, .06), 0 8px 24px rgba(60, 48, 24, .06);
     --radius: 14px;
     --cover-filter: none;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #14171a;
-      --bg-card: #1b1f22;
-      --fg: #eceeec;
-      --fg-muted: #a7aeaa;
-      --fg-faint: #8d948c;
-      --line: #2a2f33;
-      --line-strong: #3a4046;
-      --accent: #6fc295;
-      --accent-fg: #0f1312;
-      --tag-bg: #242a28;
-      --media-bg: #111416;
+      --bg: #191814;
+      --bg-head: #201e18;
+      --bg-card: #211f1a;
+      --fg: #ece8dd;
+      --fg-muted: #aaa497;
+      --fg-faint: #948d7f;
+      --line: #322e26;
+      --line-strong: #46402f;
+      --accent: #8fbf7f;
+      --accent-fg: #14180f;
+      --tag-bg: #2a2721;
+      --media-bg: #1e1c17;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .25);
-      --cover-filter: brightness(.9) saturate(.95);
+      --cover-filter: brightness(.88) saturate(.95);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #14171a;
-    --bg-card: #1b1f22;
-    --fg: #eceeec;
-    --fg-muted: #a7aeaa;
-    --fg-faint: #8d948c;
-    --line: #2a2f33;
-    --line-strong: #3a4046;
-    --accent: #6fc295;
-    --accent-fg: #0f1312;
-    --tag-bg: #242a28;
-    --media-bg: #111416;
+    --bg: #191814;
+    --bg-head: #201e18;
+    --bg-card: #211f1a;
+    --fg: #ece8dd;
+    --fg-muted: #aaa497;
+    --fg-faint: #948d7f;
+    --line: #322e26;
+    --line-strong: #46402f;
+    --accent: #8fbf7f;
+    --accent-fg: #14180f;
+    --tag-bg: #2a2721;
+    --media-bg: #1e1c17;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .25);
-    --cover-filter: brightness(.9) saturate(.95);
+    --cover-filter: brightness(.88) saturate(.95);
   }
 
   * { box-sizing: border-box; }
@@ -75,68 +80,52 @@
   .wrap { max-width: 1020px; margin: 0 auto; padding: 0 16px; }
   img, video { display: block; max-width: 100%; height: auto; }
 
-  /* ---------- шапка на тёмном фоне ---------- */
+  /* ---------- шапка ---------- */
   .hero {
-    position: relative;
-    background: #1b211d url("assets/hero.webp") center / cover no-repeat;
-    color: #f1f3ef;
-    overflow: hidden;
+    background: var(--bg-head);
+    border-bottom: 1px solid var(--line);
   }
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(14, 19, 16, .35) 0%, rgba(14, 19, 16, .72) 100%);
-  }
-  .hero > .wrap { position: relative; z-index: 1; padding-top: 68px; padding-bottom: 60px; }
-  .mark {
-    width: 54px;
-    height: 54px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
-  }
+  .hero > .wrap { padding-top: 76px; padding-bottom: 62px; }
   h1 {
     margin: 0 0 16px;
     font-size: clamp(32px, 6.4vw, 48px);
     line-height: 1.08;
-    letter-spacing: -0.025em;
-    font-weight: 650;
+    letter-spacing: -0.01em;
+    font-weight: 700;
   }
   .lede {
     margin: 0 0 10px;
-    max-width: 60ch;
+    max-width: 32em;
     font-size: clamp(16px, 2.4vw, 18px);
-    color: #cdd5ce;
+    color: var(--fg-muted);
   }
   .contacts { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
   .contacts a {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 8px 14px;
-    border: 1px solid rgba(241, 243, 239, .3);
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--line-strong);
     border-radius: 999px;
-    color: #f1f3ef;
+    color: var(--fg-muted);
     text-decoration: none;
     font-size: 14px;
-    backdrop-filter: blur(2px);
-    transition: border-color .15s, background-color .15s;
+    transition: border-color .15s, color .15s, background-color .15s;
   }
-  .contacts a:hover { border-color: #f1f3ef; background: rgba(241, 243, 239, .1); }
+  .contacts a:hover { border-color: var(--accent); color: var(--accent); background: var(--bg-card); }
   .contacts svg { width: 16px; height: 16px; flex: none; }
 
   /* ---------- секции ---------- */
   section { padding-bottom: 60px; }
   .sec-head {
     display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 6px 14px;
-    padding: 44px 0 22px;
+    flex-direction: column;
+    gap: 5px;
+    padding: 48px 0 24px;
   }
   section + section .sec-head { border-top: 1px solid var(--line); padding-top: 34px; }
-  h2 { margin: 0; font-size: 21px; letter-spacing: -0.015em; font-weight: 620; }
+  h2 { margin: 0; font-size: clamp(24px, 3.6vw, 30px); line-height: 1.15; letter-spacing: -0.015em; font-weight: 700; }
   .sec-note { margin: 0; font-size: 14px; color: var(--fg-faint); }
 
   /* ---------- главный проект ---------- */
@@ -152,24 +141,25 @@
   .feature-body { padding: 24px 24px 22px; }
   .feature-body h3 {
     margin: 0 0 12px;
-    font-size: clamp(22px, 3.4vw, 27px);
+    font-size: clamp(21px, 3.2vw, 24px);
     line-height: 1.2;
-    letter-spacing: -0.02em;
-    font-weight: 640;
+    letter-spacing: -0.015em;
+    font-weight: 700;
   }
-  .feature-body p { margin: 0 0 14px; max-width: 70ch; color: var(--fg-muted); }
-  .feature-body p.aside { font-size: 14.5px; color: var(--fg-faint); }
+  .feature-body p { margin: 0 0 14px; max-width: 34em; color: var(--fg-muted); }
+  .feature-body p.aside { font-size: 14px; color: var(--fg-faint); }
   .shots { border-top: 1px solid var(--line); background: var(--media-bg); }
+  .shots img { outline: 1px solid var(--line); outline-offset: -1px; }
   figure { margin: 0; }
   figcaption {
     padding: 9px 14px;
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--fg-faint);
     background: var(--bg-card);
   }
 
   /* ---------- карточки ---------- */
-  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
   .card {
     display: flex;
     flex-direction: column;
@@ -202,16 +192,16 @@
     box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
   }
   .card-body { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 18px; }
-  .tag {
+  .card-body .tag, .feature-body .tag {
     margin: 0 0 9px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: .09em;
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--fg-faint);
   }
-  .card h3 { margin: 0 0 10px; font-size: 19px; line-height: 1.25; letter-spacing: -0.012em; font-weight: 620; }
-  .card p { margin: 0 0 12px; font-size: 15px; color: var(--fg-muted); }
+  .card h3 { margin: 0 0 10px; font-size: 20px; line-height: 1.25; letter-spacing: -0.012em; font-weight: 700; }
+  .card p { margin: 0 0 12px; font-size: 16px; color: var(--fg-muted); }
   .card p.aside { font-size: 14px; color: var(--fg-faint); }
   .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
   .stack li {
@@ -219,7 +209,7 @@
     border-radius: 6px;
     background: var(--tag-bg);
     color: var(--fg-muted);
-    font-size: 12.5px;
+    font-size: 12px;
   }
   .actions { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
   .btn {
@@ -231,15 +221,15 @@
     background: var(--accent);
     color: var(--accent-fg);
     text-decoration: none;
-    font-size: 14.5px;
-    font-weight: 560;
+    font-size: 14px;
+    font-weight: 600;
     transition: filter .15s;
   }
   .btn:hover { filter: brightness(1.08); }
   .btn-ghost {
     color: var(--fg-muted);
     text-decoration: none;
-    font-size: 14.5px;
+    font-size: 14px;
     border-bottom: 1px solid var(--line-strong);
     transition: color .15s, border-color .15s;
   }
@@ -256,14 +246,13 @@
 
   /* ---------- движение ---------- */
   @media (prefers-reduced-motion: no-preference) {
-    .card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(27, 29, 28, .06), 0 14px 32px rgba(27, 29, 28, .08); }
-    .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(60, 48, 24, .07), 0 14px 32px rgba(60, 48, 24, .09); }
+    .js .reveal { opacity: 0; transform: translateY(10px); transition: opacity .25s ease, transform .25s ease; }
     .js .reveal.shown { opacity: 1; transform: none; }
   }
 
   @media (max-width: 680px) {
-    .hero > .wrap { padding-top: 48px; padding-bottom: 44px; }
-    .shots { grid-template-columns: 1fr; }
+    .hero > .wrap { padding-top: 52px; padding-bottom: 46px; }
     .feature-body { padding: 20px 16px 18px; }
   }
 </style>
@@ -272,7 +261,6 @@
 
 <header class="hero">
   <div class="wrap">
-    <img class="mark" src="assets/favicon.svg" width="54" height="54" alt="">
     <h1>Илья Соснин</h1>
     <p class="lede">Делаю настольные и браузерные приложения — от вёрстки свадебных фотоальбомов для работающего фотографа до детской игры про диплодока. Go, Rust, Kotlin, TypeScript.</p>
     <p class="lede">Здесь только то, что доведено до работающего состояния: можно скачать, открыть и пользоваться. Исходники всех проектов открыты.</p>
@@ -437,7 +425,7 @@
 
 <footer>
   Исходники всех проектов — на <a href="https://github.com/IliaSA101">GitHub</a>.
-  Иллюстрации на обложках инструментов сгенерированы, снимки экрана и запись Sosnina Albums — настоящие.
+  Иллюстрации на обложках карточек сгенерированы; снимки экрана, запись Sosnina Albums и кадр из «Диплодока» — настоящие.
 </footer>
 
 </div>
@@ -448,15 +436,26 @@
   var demo = document.getElementById('sa-demo');
   if (calm.matches) {
     if (demo) { demo.removeAttribute('autoplay'); demo.removeAttribute('loop'); demo.controls = true; demo.pause(); }
-  } else if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('shown'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -10% 0px' });
-    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
-    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('shown'); });
+    // Проверка по прокрутке: наблюдатель пропускал блоки при резком скачке
+    var items = [].slice.call(document.querySelectorAll('.reveal'));
+    var ticking = false;
+    var sweep = function () {
+      ticking = false;
+      var limit = window.innerHeight + 160;
+      items = items.filter(function (el) {
+        if (el.getBoundingClientRect().top > limit) { return true; }
+        el.classList.add('shown');
+        return false;
+      });
+      if (!items.length) { window.removeEventListener('scroll', onScroll); }
+    };
+    var onScroll = function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(sweep); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    sweep();
   }
 </script>
 </body>
